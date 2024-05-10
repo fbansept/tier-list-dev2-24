@@ -1,0 +1,112 @@
+.menu {
+  display: flex;
+  align-items: center;
+
+  .bouton {
+    cursor: pointer;
+    user-select: none;
+    width: 180px;
+    background-color: blue;
+    color: white;
+    padding: 1em;
+    margin: 1em;
+  }
+
+  input {
+    width: 300px;
+    height: 20px;
+  }
+}
+
+.categorie {
+  display: flex;
+  background-color: #333333;
+  border-bottom: 1px solid white;
+  min-height: 100px;
+  color: white;
+
+  &:nth-of-type(1) .entete {
+    background-color: rgb(255, 0, 0);
+  }
+  &:nth-of-type(2) .entete {
+    background-color: rgb(229, 108, 2);
+  }
+  &:nth-of-type(3) .entete {
+    background-color: rgb(229, 218, 2);
+  }
+  &:nth-of-type(4) .entete {
+    background-color: rgb(81, 229, 2);
+  }
+  &:nth-of-type(5) .entete {
+    background-color: rgb(2, 229, 221);
+  }
+  &:nth-of-type(6) .entete {
+    background-color: rgb(2, 138, 229);
+  }
+  &:nth-of-type(7) .entete {
+    background-color: rgb(206, 2, 229);
+  }
+
+  .entete {
+    background-color: rgb(229, 2, 108);
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 100px;
+    font-weight: bold;
+    flex-shrink: 0;
+  }
+
+  .images {
+    display: flex;
+    flex-wrap: wrap;
+
+    .image {
+      display: flex;
+      align-items: center;
+      height: 100px;
+      background-color: black;
+      position: relative;
+
+      img {
+        object-fit: contain;
+        width: 100px;
+        height: inherit;
+      }
+
+      &:hover .bouton {
+        display: block;
+      }
+
+      .bouton {
+        display: none;
+        cursor: pointer;
+        user-select: none;
+        border-radius: 20px;
+        height: 20px;
+        width: 20px;
+        text-align: center;
+        font-family: consolas;
+        position: absolute;
+
+        &.bouton-supprime {
+          background-color: red;
+          top: 5px;
+          right: 5px;
+        }
+
+        &.bouton-haut {
+          background-color: green;
+          bottom: 5px;
+          left: 5px;
+        }
+
+        &.bouton-bas {
+          background-color: orange;
+          bottom: 5px;
+          right: 5px;
+        }
+      }
+    }
+  }
+}

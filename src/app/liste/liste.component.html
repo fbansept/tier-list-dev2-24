@@ -1,0 +1,25 @@
+<div class="menu">
+  <div class="bouton" (click)="onAjoutElement()">Ajouter un élément</div>
+  <input type="text" [(ngModel)]="urlSaisie" />
+</div>
+
+<div>
+  @for (categorie of categories; track indexCategorie; let indexCategorie = $index) {
+
+  <div class="categorie">
+    <div class="entete">
+      <span>{{ categorie.nom }}</span>
+    </div>
+    <div class="images">
+      @for (element of categorie.elements; track indexElement; let indexElement = $index) {
+      <div class="image">
+        <div class="bouton bouton-supprime" (click)="onSupprimeElement(categorie,indexElement)">X</div>
+        <img src="{{ element }}" />
+        <div class="bouton bouton-haut" (click)="onChangeCategorie(indexCategorie, indexElement, true)">+</div>
+        <div class="bouton bouton-bas" (click)="onChangeCategorie(indexCategorie, indexElement, false)">-</div>
+      </div>
+      }
+    </div>
+  </div>
+  }
+</div>
