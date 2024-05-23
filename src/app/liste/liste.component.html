@@ -17,8 +17,14 @@
   $index) {
 
   <div class="categorie">
-    <div class="entete">
-      <span>{{ categorie.nom }}</span>
+    <div class="entete" (dblclick)="onDoubleClicCategorie(categorie, $event)">
+      <input
+        [(ngModel)]="categorie.nom"
+        [class.visible]="categorie.estModifie"
+        (blur)="onBlurInputNomCategorie(categorie)"
+        (keyup)="onKeyUpInputNomCategorie(categorie, $event)"
+      />
+      <span [class.visible]="!categorie.estModifie">{{ categorie.nom }}</span>
 
       @if(categories.length > 1) {
       <div

@@ -1,9 +1,11 @@
+import { NgStyle } from '@angular/common';
 import { Component } from '@angular/core';
 import { FormsModule } from '@angular/forms';
 
 declare type Categorie = {
   nom: string;
   elements: string[];
+  estModifie: boolean;
 };
 
 @Component({
@@ -26,6 +28,7 @@ export class ListeComponent {
       this.categories.push({
         nom: this.nomCategorieSaisie,
         elements: [],
+        estModifie: false,
       });
 
       //on vide le champs de texte du nom de la catégorie
@@ -71,16 +74,53 @@ export class ListeComponent {
 
   initialiseCategories() {
     this.categories = [
-      { nom: 'Top', elements: [] },
-      { nom: 'Bien', elements: [] },
-      { nom: 'Bof', elements: [] },
-      { nom: 'Nul', elements: [] },
-      { nom: 'Horrible', elements: [] },
+      { nom: 'Top', elements: [], estModifie: false },
+      { nom: 'Bien', elements: [], estModifie: false },
+      { nom: 'Bof', elements: [], estModifie: false },
+      { nom: 'Nul', elements: [], estModifie: false },
+      { nom: 'Horrible', elements: [], estModifie: false },
     ];
   }
 
+  onDoubleClicCategorie(categorieDoubleClique: Categorie, evenement: any) {
+    //on change l'état de toute s les catégories à non modifiées
+    this.categories.forEach((categorie) => {
+      categorie.estModifie = false;
+    });
+
+    //on change l'état de la catégorie double cliquée à modifiée
+    categorieDoubleClique.estModifie = true;
+
+    //On recupere du DOM l'elment double cliqué
+    const element = evenement.target;
+
+    if (element != null) {
+      //si l'éléméent est un enfant de l'entete, on récupère l'entete
+      const enTete = element.closest('.entete');
+
+      //on recupere l'input de l'entete double cliqué
+      const input = enTete.querySelector('input');
+
+      //Uggly fix pour pouvoir affecter le focus à l'input
+      setTimeout(() => input.focus(), 0);
+    }
+  }
+
+  onBlurInputNomCategorie(categorie: Categorie) {
+    categorie.estModifie = false;
+
+    //on enregistre dans le localstorage
+    localStorage.setItem('categories', JSON.stringify(this.categories));
+  }
+
+  onKeyUpInputNomCategorie(categorie: Categorie, evenement: KeyboardEvent) {
+    if (evenement.code == 'Enter' || evenement.code == 'Escape') {
+      this.onBlurInputNomCategorie(categorie);
+    }
+  }
+
   reset() {
-    //on réinitialise les catégories 
+    //on réinitialise les catégories
     this.initialiseCategories();
 
     //on enregistre dans le localstorage
