@@ -3,20 +3,58 @@
   <input type="text" [(ngModel)]="urlSaisie" />
 </div>
 
+<div class="menu">
+  <div class="bouton" (click)="onAjoutCategorie()">Ajouter une catégorie</div>
+  <input type="text" [(ngModel)]="nomCategorieSaisie" />
+</div>
+
+<div class="menu">
+  <div class="bouton" (click)="reset()">Tout réinitialiser</div>
+</div>
+
 <div>
-  @for (categorie of categories; track indexCategorie; let indexCategorie = $index) {
+  @for (categorie of categories; track indexCategorie; let indexCategorie =
+  $index) {
 
   <div class="categorie">
     <div class="entete">
       <span>{{ categorie.nom }}</span>
+
+      @if(categories.length > 1) {
+      <div
+        class="bouton bouton-supprime"
+        (click)="onSupprimeCategorie(categorie, indexCategorie)"
+      >
+        X
+      </div>
+      }
     </div>
     <div class="images">
-      @for (element of categorie.elements; track indexElement; let indexElement = $index) {
+      @for (element of categorie.elements; track indexElement; let indexElement
+      = $index) {
       <div class="image">
-        <div class="bouton bouton-supprime" (click)="onSupprimeElement(categorie,indexElement)">X</div>
+        <div
+          class="bouton bouton-supprime"
+          (click)="onSupprimeElement(categorie, indexElement)"
+        >
+          X
+        </div>
         <img src="{{ element }}" />
-        <div class="bouton bouton-haut" (click)="onChangeCategorie(indexCategorie, indexElement, true)">+</div>
-        <div class="bouton bouton-bas" (click)="onChangeCategorie(indexCategorie, indexElement, false)">-</div>
+        @if(indexCategorie > 0) {
+        <div
+          class="bouton bouton-haut"
+          (click)="onChangeCategorie(indexCategorie, indexElement, true)"
+        >
+          +
+        </div>
+        } @if(indexCategorie < categories.length - 1) {
+        <div
+          class="bouton bouton-bas"
+          (click)="onChangeCategorie(indexCategorie, indexElement, false)"
+        >
+          -
+        </div>
+        }
       </div>
       }
     </div>
